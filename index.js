@@ -17,7 +17,7 @@ Client.on('message', async message => {
   var fromwhere = '';
   var fa2dh = '';
   var filter = m => m.author.id === message.author.id;
-  var subChannel = message.guild.channels.get('502613915746959370');
+  var subChannel = message.guild.channels.find(c => c.name === 'التقديمات');
  
   if(command == prefix + 'apply') {
       if(message.author.bot) return;
@@ -85,8 +85,8 @@ Client.on('message', async message => {
                                               subChannel.send(subMsg).then(msgS => {
                                                   msgS.react('✅').then(() => msgS.react('❎'))
                                                  
-                                                  let acceptRe = (reaction, user) => reaction.emoji.name === '✅'  && user.id === 'ايدي الي يقبل الطلب'
-                                                  let noAcceptRe = (reaction, user) => reaction.emoji.name === '❎' && user.id === 'ايدي الي يقبل الطلب'
+                                                  let accept = (reaction, user) => reaction.emoji.name === '✅'  && user.id === 'ايدي الي يقبل الطلب'
+                                                  let noAccept = (reaction, user) => reaction.emoji.name === '❎' && user.id === 'ايدي الي يقبل الطلب'
                                                  
                                                   let acceptRe = msgS.createReactionCollector(accept);
                                                   let noAcceptRe = msgS.createReactionCollector(noAccept);
