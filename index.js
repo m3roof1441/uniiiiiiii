@@ -88,8 +88,8 @@ Client.on('message', async message => {
                                                   let accept = (reaction, user) => reaction.emoji.name === '✅'  && user.id === 'ايدي الي يقبل الطلب'
                                                   let noAccept = (reaction, user) => reaction.emoji.name === '❎' && user.id === 'ايدي الي يقبل الطلب'
                                                  
-                                                  let acceptRe = msgS.createReactionCollector(accept);
-                                                  let noAcceptRe = msgS.createReactionCollector(noAccept);
+                                                  var acceptRe = msgS.createReactionCollector(accept);
+                                                  var noAcceptRe = msgS.createReactionCollector(noAccept);
                                                  
                                                   acceptRe.on('collect', r => {
                                                       msgS.delete();
