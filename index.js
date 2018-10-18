@@ -17,7 +17,7 @@ Client.on('message', async message => {
   var fromwhere = '';
   var fa2dh = '';
   var filter = m => m.author.id === message.author.id;
-  var subChannel = message.guild.channels.find(c => c.name === 'التقديمات');
+  var subChannel = message.guild.channels.get('502613915746959370');
  
   if(command == prefix + 'apply') {
       if(message.author.bot) return;
