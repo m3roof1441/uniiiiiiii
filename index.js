@@ -120,7 +120,7 @@ Client.on('message', async message => {
   }
 });
 
-const devs = ["280749272498962432" , "494529176372772865"];
+const devs = ["280749272498962432"];
 const adminprefix = ["-"];
 Client.on('message', message => {
     var argresult = message.content.split(` `).slice(1).join(' ');
