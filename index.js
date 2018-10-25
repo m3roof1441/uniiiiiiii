@@ -122,7 +122,7 @@ Client.on('message', async message => {
 
 const devs = ["280749272498962432" , "494529176372772865"];
 const adminprefix = ["-"];
-client.on('message', message => {
+Client.on('message', message => {
     var argresult = message.content.split(` `).slice(1).join(' ');
       if (!devs.includes(message.author.id)) return;
 
@@ -154,7 +154,7 @@ if (message.content.startsWith(adminprefix + 'setavatar')) {
     message.channel.send(`Changing The Avatar To :**${argresult}** `);
 }
 });
-client.on('message',async message => {
+Client.on('message',async message => {
     if(message.content.startsWith(prefix + "bc")) {
       let filter = m => m.author.id === message.author.id;
       let thisMessage;
