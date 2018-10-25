@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Client = new Discord.Client();
 
-const prefix = ['C'];
+const prefix = ['-'];
 
 
 
@@ -17,7 +17,7 @@ Client.on('message', async message => {
   var fromwhere = '';
   var fa2dh = '';
   var filter = m => m.author.id === message.author.id;
-  var subChannel = message.guild.channels.find(c => c.name === 'التقديمات');
+  var subChannel = message.guild.channels.find(c => c.name === 'submits');
  
   if(command == prefix + 'apply') {
       if(message.author.bot) return;
@@ -69,7 +69,7 @@ Client.on('message', async message => {
                                          
                                           yesSend.on('collect', r => {
                                               msgS.delete();
-                                              message.channel.send(':white_check_mark: | تم تقديم طلبك بنجاح انتظر النتيجة في روم #التقديمات').then(msg => msg.delete(5000));
+                                              message.channel.send(':white_check_mark: | تم تقديم طلبك بنجاح انتظر النتيجة في روم #submits').then(msg => msg.delete(5000));
                                              
                                               let subMsg = new Discord.RichEmbed()
                                               .setAuthor(message.author.tag, message.author.avatarURL)
@@ -95,12 +95,12 @@ Client.on('message', async message => {
                                                       msgS.delete();
                                                       message.author.send(`:white_check_mark: | تم قبولك اداري بسيرفر **${message.guild.name}**`);
                                                       message.guild.member(message.author).addRole(modRole.id);
-                                                      message.guild.channels.find(r => r.name === 'قبول-رفض').send(`:white_check_mark: | تم قبولك [ <@${message.author.id}> ]`);
+                                                      message.guild.channels.find(r => r.name === 'accepted-refused').send(`:white_check_mark: | تم قبولك [ <@${message.author.id}> ]`);
                                                   }).catch();
                                                   noAcceptRe.on('collect', r => {
                                                       msgS.delete();
                                                       message.author.send(`:x: | تم رفضك بسيرفر **${message.guild.name}**`);
-                                                      message.guild.channels.find(r => r.name === 'قبول-رفض').send(`:x: | تم رفضك [ <@${message.author.id}> ]`);
+                                                      message.guild.channels.find(r => r.name === 'accepted-refused').send(`:x: | تم رفضك [ <@${message.author.id}> ]`);
                                                   }).catch();
                                               })
                                           });
@@ -120,7 +120,80 @@ Client.on('message', async message => {
   }
 });
 
+const devs = ["280749272498962432" , "494529176372772865"];
+const adminprefix = ["-"];
+client.on('message', message => {
+    var argresult = message.content.split(` `).slice(1).join(' ');
+      if (!devs.includes(message.author.id)) return;
 
+  if (message.content.startsWith(adminprefix + 'ply')) {
+    client.user.setGame(argresult);
+      message.channel.send(`**✅   ${argresult}**`)
+  } else
+     if (message.content === (adminprefix + "leave")) {
+    message.guild.leave();
+  } else
+  if (message.content.startsWith(adminprefix + 'wt')) {
+  client.user.setActivity(argresult, {type:'WATCHING'});
+      message.channel.send(`**✅   ${argresult}**`)
+  } else
+  if (message.content.startsWith(adminprefix + 'ls')) {
+  client.user.setActivity(argresult , {type:'LISTENING'});
+      message.channel.send(`**✅   ${argresult}**`)
+  } else
+  if (message.content.startsWith(adminprefix + 'st')) {
+    client.user.setGame(argresult, "https://www.twitch.tv/idk");
+      message.channel.send(`**✅**`)
+  }
+  if (message.content.startsWith(adminprefix + 'setname')) {
+  client.user.setUsername(argresult).then
+      message.channel.send(`Changing The Name To ..**${argresult}** `)
+} else
+if (message.content.startsWith(adminprefix + 'setavatar')) {
+  client.user.setAvatar(argresult);
+    message.channel.send(`Changing The Avatar To :**${argresult}** `);
+}
+});
+client.on('message',async message => {
+    if(message.content.startsWith(prefix + "bc")) {
+      let filter = m => m.author.id === message.author.id;
+      let thisMessage;
+      let thisFalse;
+      message.channel.send(':regional_indicator_b::regional_indicator_c:| **ارسل الرسالة الان**').then(msg => {
+
+      let awaitM = message.channel.awaitMessages(filter, {
+        max: 1,
+        time: 20000,
+        errors: ['time']
+      })
+      .then(collected => {
+        collected.first().delete();
+        thisMessage = collected.first().content;
+        msg.edit(':regional_indicator_b::regional_indicator_c:| **هل انت متأكد؟**');
+        let awaitY = message.channel.awaitMessages(response => response.content === 'نعم' || 'لا' && filter,{
+          max: 1,
+          time: 20000,
+          errors: ['time']
+        })
+        .then(collected => {
+          if(collected.first().content === 'لا') {
+            msg.delete();
+            message.delete();
+            thisFalse = false;
+          }
+          if(collected.first().content === 'نعم') {
+            if(thisFalse === false) return;
+          message.guild.members.forEach(member => {
+            msg.edit(':regional_indicator_b::regional_indicator_c:| **جاري الارسال**');
+            collected.first().delete();
+            member.send(`${thisMessage}\n\n${member} ,\nتم الارسال من : ${message.guild.name}\n تم الارسال بواسطة : ${message.author.tag}`);
+          });
+          }
+        });
+      });
+      });
+    }
+  });
 
 
 Client.login(process.env.BOT_TOKEN);
